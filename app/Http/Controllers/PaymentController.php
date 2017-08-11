@@ -16,22 +16,22 @@ class PaymentController extends Controller
     {
       $user = Auth::user();
 
-      return view('payment.test');
+      return view('payment.payin');
     }
 
     public function process(Request $request) {
         $user = Auth::user();
         $token = $request->input('stripeToken');
 
-        $input = $request->all();
-        dd($input);
+        //$input = $request->all();
+        //dd($input);
 
         $service_fee = 0.15;
 
         \Stripe\Stripe::setApiKey("sk_test_j6CkUgJIE31MbMd9n1NeXeE3");
 
         $price = 10000;
-        $fee = floor($price * (1-$service_fee));
+        $fee = floor($price * ($service_fee));
 
         \Stripe\Charge::create(array(
             "amount"          => ($price + $fee),
