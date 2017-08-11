@@ -21,19 +21,20 @@ class PaymentController extends Controller
 
     public function process(Request $request) {
         $user = Auth::user();
-        $input = $request->all();
-
         $token = $request->input('stripeToken');
 
-        $affiliate_cut = 0.25;
+        $input = $request->all();
+        dd($input);
+
+        $service_fee = 0.15;
 
         \Stripe\Stripe::setApiKey("sk_test_j6CkUgJIE31MbMd9n1NeXeE3");
 
         $price = 10000;
-        $fee = floor($price * (1-$affiliate_cut));
+        $fee = floor($price * (1-$service_fee));
 
         \Stripe\Charge::create(array(
-            "amount"          => $price,
+            "amount"          => ($price + $fee),
             "currency"        => "dkk",
             "application_fee" => $fee,
             "source"          => $token, // obtained with Stripe.js
