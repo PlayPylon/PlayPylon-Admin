@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Torann\Currency\Facades\Currency;
 
 class HomeController extends Controller
 {
@@ -26,8 +27,8 @@ class HomeController extends Controller
     {
       $user = Auth::user();
 
+      \Stripe\Stripe::setApiKey("sk_test_j6CkUgJIE31MbMd9n1NeXeE3");
       if (empty($user->stripe_id)) {
-        \Stripe\Stripe::setApiKey("sk_test_j6CkUgJIE31MbMd9n1NeXeE3");
         $str_account = \Stripe\Account::create(array(
           "type" => "custom",
           "country" => strtoupper($user->geo_code),
@@ -38,6 +39,13 @@ class HomeController extends Controller
         $user->save();
       }
 
-      return view('home');
+      $balance = \Stripe\Balance::retrieve(
+        array("stripe_account" => $user->stripe_id)
+      );
+
+        //dd($balance->pending[0]->amount);
+      //dd(currency($balance->pending->amount));
+
+      return view('home',['balance'=>$balance]);
     }
 }
