@@ -55,13 +55,15 @@ return array(
 
                 'mysql' => array(
                         'driver'    => 'mysql',
-                        'host'      => 'localhost',
-                        'database'  => 'cpdtgwysbp',
-                        'username'  => 'cpdtgwysbp',
-                        'password'  => '7Fy9dqypXW',
+                        'host'      => env('DB_HOST', 'localhost'),
+                        'database'  => env('DB_DATABASE', 'intranet_prod'),
+                        'username'  => env('DB_USERNAME'),
+                        'password'  => env('DB_PASSWORD'),
                         'charset'   => 'utf8',
                         'collation' => 'utf8_unicode_ci',
                         'prefix'    => '',
+
+
                 ),
 
                 'pgsql' => array(

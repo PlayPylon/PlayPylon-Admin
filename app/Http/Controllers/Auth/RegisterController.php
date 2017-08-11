@@ -51,6 +51,7 @@ class RegisterController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'geo_code' => 'required|string|max:2',
         ]);
     }
 
@@ -64,6 +65,7 @@ class RegisterController extends Controller
     {
         return User::create([
             'name' => $data['name'],
+            'geo_code' => $data['geo_code'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
