@@ -1,45 +1,47 @@
+@extends('layouts.app')
 
-                    <script src="https://js.stripe.com/v3/"></script>
+@section('content')
+<script src="https://js.stripe.com/v3/"></script>
 
-                    <form action="/process" method="post" id="payment-form">
-                        <div class="form-row">
-                            <label for="card-element">
-                                Credit or debit card
-                            </label>
-                            <div id="card-element">
-                                <!-- a Stripe Element will be inserted here. -->
-                            </div>
+<form action="/process" method="post" id="payment-form">
+<div class="form-row">
+    <label for="card-element">
+        Credit or debit card
+    </label>
+    <div id="card-element">
+        <!-- a Stripe Element will be inserted here. -->
+    </div>
 
-                            <!-- Used to display form errors -->
-                            <div id="card-errors" role="alert"></div>
-                        </div>
+    <!-- Used to display form errors -->
+    <div id="card-errors" role="alert"></div>
+</div>
 
-                        <button>Submit Payment</button>
-                    </form>
+<button class="btn">Submit Payment</button>
+</form>
 
-                    <style>
-                        .StripeElement {
-                            background-color: white;
-                            padding: 8px 12px;
-                            border-radius: 4px;
-                            border: 1px solid transparent;
-                            box-shadow: 0 1px 3px 0 #e6ebf1;
-                            -webkit-transition: box-shadow 150ms ease;
-                            transition: box-shadow 150ms ease;
-                        }
+<style>
+.StripeElement {
+    background-color: white;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
 
-                        .StripeElement--focus {
-                            box-shadow: 0 1px 3px 0 #cfd7df;
-                        }
+.StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+}
 
-                        .StripeElement--invalid {
-                            border-color: #fa755a;
-                        }
+.StripeElement--invalid {
+    border-color: #fa755a;
+}
 
-                        .StripeElement--webkit-autofill {
-                            background-color: #fefde5 !important;
-                        }
-                        </style>
+.StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+}
+</style>
 
 <script>
 
@@ -50,7 +52,6 @@
         hiddenInput.setAttribute('type', 'hidden');
         hiddenInput.setAttribute('name', 'stripeToken');
         hiddenInput.setAttribute('value', token.id);
-        alert(token.id);
         form.appendChild(hiddenInput);
 
         // Submit the form
@@ -101,7 +102,6 @@
     var form = document.getElementById('payment-form');
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        alert(form);
 
         stripe.createToken(card).then(function(result) {
             if (result.error) {
@@ -116,3 +116,4 @@
     });
 
 </script>
+@endsection
